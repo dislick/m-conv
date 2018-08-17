@@ -4,7 +4,8 @@ const exec = require('child_process').exec;
 const jobs = require('./jobs.json').jobs;
 const fs = require('fs');
 
-
+// Make sure that OUTPUT_DIRECTORY is not within WATCH_DIRECTORY or you will
+// encounter an inifinite loop.
 const WATCH_DIRECTORY = path.resolve('./input');
 const OUTPUT_DIRECTORY = path.resolve('./output');
 
