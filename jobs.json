@@ -1,0 +1,34 @@
+{
+  "jobs": [
+    {
+      "name": "720p_H264_low",
+      "flags": "-vf scale=1280:-2 -c:v libx264 -crf 35",
+      "out_ext": ".mp4"
+    },
+    {
+      "name": "720p_H264_medium",
+      "flags": "-vf scale=1280:-2 -c:v libx264 -crf 20",
+      "out_ext": ".mp4"
+    },
+    {
+      "name": "720p_H264_high",
+      "flags": "-vf scale=1280:-2 -c:v libx264 -crf 15",
+      "out_ext": ".mp4"
+    },
+    {
+      "name": "1080p_H264_low",
+      "flags": "-vf scale=1920:-2 -c:v libx264 -crf 35",
+      "out_ext": ".mp4"
+    },
+    {
+      "name": "1080p_H264_medium",
+      "flags": "-vf scale=1920:-2 -c:v libx264 -crf 20",
+      "out_ext": ".mp4"
+    },
+    {
+      "name": "1080p_H264_high",
+      "flags": "-vf scale=1920:-2 -c:v libx264 -crf 15",
+      "out_ext": ".mp4"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "ffmpeg-auto-convert",
+  "version": "0.0.1",
+  "description": "",
+  "main": "watch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ffmpeg",
+    "watch"
+  ],
+  "author": "Patrick Muff",
+  "license": "ISC",
+  "dependencies": {
+    "chokidar": "^2.0.4"
+  }
+}
