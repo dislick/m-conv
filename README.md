@@ -17,7 +17,7 @@ The example tasks converts videos to 720p using `ffmpeg`.
   "tasks": [
     {
       "group": "videos",
-      "command": "ffmpeg -i \"{{input}}\" {{flags}} \"{{output}}\"",
+      "command": "ffmpeg -i \"{{input}}\" -y {{flags}} \"{{output}}\"",
       "matched_ext": [
         "mp4",
         "mpg",

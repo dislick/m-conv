@@ -2,7 +2,7 @@
   "tasks": [
     {
       "group": "Videos (ffmpeg)",
-      "command": "ffmpeg -i \"{{input}}\" {{flags}} \"{{output}}\"",
+      "command": "ffmpeg -i \"{{input}}\" -y {{flags}} \"{{output}}\"",
       "matched_ext": [
         "mp4",
         "mpg",
