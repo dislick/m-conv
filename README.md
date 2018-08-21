@@ -2,6 +2,8 @@
 
 m-conv watches a directory and converts media files according to rules defined in a `m-conv-tasks.json` file. It's supposed to be used on a server where the users can copy their media files onto a network share and then receive their converted files in the output folder.
 
+It allows the user to paste a whole directory tree and will keep that structure in the output directory to be as user-friendly as possible.
+
 ## Demo
 
 ![demo video](.github/mconvdemo.gif)
@@ -65,3 +67,10 @@ Array of file extensions that you want to execute this task on. Do not include a
 #### `jobs`
 
 Array of jobs you want to execute for each file. The `name` of a job is going to be the name of the output directory. `out_ext` is the extension that will be added to the final output path in the template variable `{{output}}`.
+
+### Environment Variables
+
+* `CONVERT_WATCH_DIR`: Directory to watch, should be a relative path like `./share/input`
+* `CONVERT_OUT_DIR`: Directory for the output files, should be a relative path like `./share/output`
+
+Both variables default to `./input` and `./output`.

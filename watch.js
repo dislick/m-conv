@@ -25,7 +25,10 @@ const watcher = chokidar.watch(WATCH_DIRECTORY, {
 });
 
 
-
+/**
+ * `fileQueue` holds all files that await conversion. Because of how efficently
+ * tools like ffmpeg use CPU cores, m-conv will only start 1 job at a time.
+ */
 let fileQueue = []; // { path: string, type: string }[]
 let queueIsWorking = false;
 
@@ -33,9 +36,9 @@ watcher.on('add', (filePath) => {
   let extension = path.extname(filePath);
 
   for (let task of tasks) {
-    let regex = new RegExp(`\.(${task.matched_ext.join('|')})`, 'i');
-    if (regex.test(extension)) {
-      // matches!
+    let extensionRegex = new RegExp(`\.(${task.matched_ext.join('|')})`, 'i');
+
+    if (extensionRegex.test(extension)) {
       fileQueue.push({
         path: filePath,
         type: task.group
@@ -63,9 +66,7 @@ async function startQueue() {
 }
 
 /**
- * Starts the jobs defined in `jobs.json` for the given `filePath`. It also
- * creates statistics for each job and adds them to the output directory as
- * `stats.txt`.
+ * Starts the jobs defined in the JSON file for the given `file`.
  * @param {Object} file { path: string, type: string }
  */
 async function startJobs(file) {
@@ -80,13 +81,11 @@ async function startJobs(file) {
     throw new Error('No matching task found');
   }
 
-  const relativePath = path.relative(WATCH_DIRECTORY, filePath)
-  const subfolders = path.dirname(relativePath);
+  const subfolders = path.dirname(path.relative(WATCH_DIRECTORY, filePath));
   const extension = path.extname(filePath);
   const fileName = path.basename(filePath, extension);  
 
   for (let job of task.jobs) {
-    // create directory in output folder with the same name as the file
     let outDirPath = path.join(OUTPUT_DIRECTORY, job.name, subfolders);
     fs.mkdirpSync(outDirPath);
 
