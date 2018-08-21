@@ -10,7 +10,7 @@ m-conv watches a directory and converts media files according to rules defined i
 
 The example tasks converts videos to 720p using `ffmpeg`.
 
-```
+```json
 {
   "tasks": [
     {
@@ -60,9 +60,8 @@ Template string for the command that will be executed. You can use the following
 
 #### `matched_ext`
 
-Array of file extensions that you want to execute this task on. Do not include a dot before the extension.
+Array of file extensions that you want to execute this task on. Do not include a dot in front of the extension.
 
 #### `jobs`
 
 Array of jobs you want to execute for each file. The `name` of a job is going to be the name of the output directory. `out_ext` is the extension that will be added to the final output path in the template variable `{{output}}`.
-
