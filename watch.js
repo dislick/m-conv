@@ -1,8 +1,8 @@
 const chokidar = require('chokidar');
 const path = require('path');
 const exec = require('child_process').exec;
-const jobs = require('./jobs.json').jobs;
-const fs = require('fs');
+const tasks = require('./m-conv-tasks.json').tasks;
+const fs = require('fs-extra');
 
 // Make sure that OUTPUT_DIRECTORY is not within WATCH_DIRECTORY or you will
 // encounter an inifinite loop.
@@ -24,13 +24,24 @@ const watcher = chokidar.watch(WATCH_DIRECTORY, {
   }
 });
 
-// `fileQueue` is an array of all added file paths that will be sequentially
-// converted.
-let fileQueue = [];
+
+
+let fileQueue = []; // { path: string, type: string }[]
 let queueIsWorking = false;
 
 watcher.on('add', (filePath) => {
-  fileQueue.push(filePath);
+  let extension = path.extname(filePath);
+
+  for (let task of tasks) {
+    let regex = new RegExp(`\.(${task.matched_ext.join('|')})`, 'i');
+    if (regex.test(extension)) {
+      // matches!
+      fileQueue.push({
+        path: filePath,
+        type: task.group
+      });
+    }
+  }
 
   if (!queueIsWorking) {
     startQueue();
@@ -44,8 +55,8 @@ async function startQueue() {
   queueIsWorking = true;
 
   while (fileQueue.length > 0) {
-    let filePath = fileQueue.pop();
-    await startJobs(filePath);
+    let file = fileQueue.pop();
+    await startJobs(file);
   }
 
   queueIsWorking = false;
@@ -55,48 +66,63 @@ async function startQueue() {
  * Starts the jobs defined in `jobs.json` for the given `filePath`. It also
  * creates statistics for each job and adds them to the output directory as
  * `stats.txt`.
- * @param {string} filePath Full path to the file
+ * @param {Object} file { path: string, type: string }
  */
-async function startJobs(filePath) {
+async function startJobs(file) {
+  const filePath = file.path;
+  let task;
+
+  // Find matching task in JSON file
+  let results = tasks.filter(task => task.group === file.type);
+  if (results && results.length > 0) {
+    task = results[0];
+  } else {
+    throw new Error('No matching task found');
+  }
+
+  const relativePath = path.relative(WATCH_DIRECTORY, filePath)
+  const subfolders = path.dirname(relativePath);
   const extension = path.extname(filePath);
   const fileName = path.basename(filePath, extension);  
 
-  // create directory in output folder with the same name as the file
-  const outDir = fileName + '_' + Math.floor(Math.random() * Date.now());
-  const outDirPath = path.join(OUTPUT_DIRECTORY, outDir);
-  if (!fs.existsSync(outDirPath)) {
-    fs.mkdirSync(outDirPath);
-  }
-  
-  let stats = [];
+  for (let job of task.jobs) {
+    // create directory in output folder with the same name as the file
+    let outDirPath = path.join(OUTPUT_DIRECTORY, job.name, subfolders);
+    fs.mkdirpSync(outDirPath);
 
-  for (let job of jobs) {
-    const outFileName = `${fileName}_${job.name}${job.out_ext}`;
+    const outFileName = `${fileName}.${job.out_ext}`;
     const outFilePath = path.join(outDirPath, outFileName);
 
-    const command = `ffmpeg -i "${filePath}" ${job.flags} -y "${outFilePath}"`;
+    const command = buildCommand(task.command, {
+      input: filePath,
+      output: outFilePath,
+      flags: job.flags,
+    });
 
     console.log('Starting job', job.name);
 
     try {
-      let start = Date.now();
       await executeCommand(command);
-      let duration = Math.round((Date.now() - start) / 1000);
-      stats.push({
-        job: job.name,
-        input: filePath,
-        output: outFilePath,
-        duration_in_seconds: duration
-      });
       console.log('Completed job', job.name);
     } catch (ex) {
       console.log('Job failed', ex);
     }
   }
-
-  // Write statistics file
-  fs.writeFileSync(path.join(outDirPath, 'stats.txt'), JSON.stringify(stats, null, 2));
 };
+
+/**
+ * 
+ * @param {string} template 
+ * @param {object} data 
+ */
+function buildCommand(template, data) {
+  for (let key in data) {
+    if (data.hasOwnProperty(key)) {
+      template = template.replace(new RegExp(`\\{\\{` + key + '\\}\\}', 'ig'), data[key]);
+    }
+  }
+  return template;
+}
 
 /**
  * Spawns a command using child_process.exec() and returns a Promise.

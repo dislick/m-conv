@@ -1,0 +1,62 @@
+{
+  "tasks": [
+    {
+      "group": "Videos (ffmpeg)",
+      "command": "ffmpeg -i \"{{input}}\" {{flags}} \"{{output}}\"",
+      "matched_ext": [
+        "mp4",
+        "mpg",
+        "mpeg",
+        "wmv",
+        "flv",
+        "avi",
+        "mov"
+      ],
+      "jobs": [
+        {
+          "name": "720p_H264_medium",
+          "flags": "-vf scale=1280:-2 -c:v libx264 -crf 20",
+          "out_ext": "mp4"
+        },
+        {
+          "name": "720p_H264_high",
+          "flags": "-vf scale=1280:-2 -c:v libx264 -crf 15",
+          "out_ext": "mp4"
+        },
+        {
+          "name": "1080p_H264_medium",
+          "flags": "-vf scale=1920:-2 -c:v libx264 -crf 20",
+          "out_ext": "mp4"
+        },
+        {
+          "name": "1080p_H264_high",
+          "flags": "-vf scale=1920:-2 -c:v libx264 -crf 15",
+          "out_ext": "mp4"
+        }
+      ]
+    },
+    {
+      "group": "Images (ImageMagick)",
+      "command": "convert {{flags}} \"{{input}}\" \"{{output}}\"",
+      "matched_ext": [
+        "jpg",
+        "jpeg",
+        "png",
+        "tiff",
+        "gif"
+      ],
+      "jobs": [
+        {
+          "name": "small",
+          "flags": "-strip -interlace Plane -quality 75% -geometry 1080x",
+          "out_ext": "jpg"
+        },
+        {
+          "name": "medium",
+          "flags": "-strip -interlace Plane -quality 85% -geometry 1920x",
+          "out_ext": "jpg"
+        }
+      ]
+    }
+  ]
+}

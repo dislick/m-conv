@@ -13,6 +13,7 @@
   "author": "Patrick Muff",
   "license": "ISC",
   "dependencies": {
-    "chokidar": "^2.0.4"
+    "chokidar": "^2.0.4",
+    "fs-extra": "^7.0.0"
   }
 }
