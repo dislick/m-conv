@@ -1,17 +1,21 @@
 {
   "name": "m-conv",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Automatic media conversion by copying files to a folder",
-  "main": "watch.js",
+  "main": "src/watch.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "media",
+    "conversion",
+    "watcher",
     "ffmpeg",
-    "watch"
+    "convert",
+    "imagemagick"
   ],
   "author": "Patrick Muff",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "chokidar": "^2.0.4",
     "fs-extra": "^7.0.0"
