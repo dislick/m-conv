@@ -68,9 +68,17 @@ Array of file extensions that you want to execute this task on. Do not include a
 
 Array of jobs you want to execute for each file. The `name` of a job is going to be the name of the output directory. `out_ext` is the extension that will be added to the final output path in the template variable `{{output}}`.
 
-### Environment Variables
+## Environment Variables
 
 * `CONVERT_WATCH_DIR`: Directory to watch, should be a relative path like `./share/input`
 * `CONVERT_OUT_DIR`: Directory for the output files, should be a relative path like `./share/output`
 
 Both variables default to `./input` and `./output`.
+
+## Clearing Directories
+
+You should setup a cronjob to empty the directories every now and then:
+
+```
+0 0 * * 0       rm -rf /var/mediaconverter/share/{input,output}/*
+```
