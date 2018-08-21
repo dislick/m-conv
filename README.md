@@ -12,7 +12,7 @@ It allows the user to paste a whole directory tree and will keep that structure 
 
 The example tasks converts videos to 720p using `ffmpeg`.
 
-```json
+```javascript
 {
   "tasks": [
     {
