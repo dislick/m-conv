@@ -54,9 +54,9 @@ Name of the group, must be unique among tasks.
 
 Template string for the command that will be executed. You can use the following variables:
 
-* `{{input}}`: Absolute path to the input file, e.g. `/var/media/file 1.jpg`
-* `{{output}}`: Absolute path to the output file, e.g. `/var/media/out/file 1.jpg`
-* `{{flags}}`: Flags that are defined in each job
+- `{{input}}`: Absolute path to the input file, e.g. `/var/media/file 1.jpg`
+- `{{output}}`: Absolute path to the output file, e.g. `/var/media/out/file 1.jpg`
+- `{{flags}}`: Flags that are defined in each job
 
 **Careful:** Make sure to always escape input and output variables with quotation marks as demonstrated in the example task.
 
@@ -70,8 +70,8 @@ Array of jobs you want to execute for each file. The `name` of a job is going to
 
 ## Environment Variables
 
-* `CONVERT_WATCH_DIR`: Directory to watch, should be a relative path like `./share/input`
-* `CONVERT_OUT_DIR`: Directory for the output files, should be a relative path like `./share/output`
+- `CONVERT_WATCH_DIR`: Directory to watch, should be a relative path like `./share/input`
+- `CONVERT_OUT_DIR`: Directory for the output files, should be a relative path like `./share/output`
 
 Both variables default to `./input` and `./output`.
 

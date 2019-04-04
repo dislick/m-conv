@@ -11,8 +11,12 @@ const tasks = require('../m-conv-tasks.json').tasks;
  * relative paths. Oh and you know, don't create an infinite loop by having the
  * output dir inside the input dir.
  */
-const WATCH_DIRECTORY = path.resolve(process.env.CONVERT_WATCH_DIR || './input');
-const OUTPUT_DIRECTORY = path.resolve(process.env.CONVERT_OUT_DIR || './output');
+const WATCH_DIRECTORY = path.resolve(
+  process.env.CONVERT_WATCH_DIR || './input'
+);
+const OUTPUT_DIRECTORY = path.resolve(
+  process.env.CONVERT_OUT_DIR || './output'
+);
 
 /**
  * The main reason that we are printing the directory variables is so that the
@@ -48,7 +52,7 @@ const watcher = chokidar.watch(WATCH_DIRECTORY, {
 let fileQueue = []; // { path: string, type: string }[]
 let queueIsWorking = false;
 
-watcher.on('add', (filePath) => {
+watcher.on('add', filePath => {
   let extension = path.extname(filePath);
 
   for (let task of tasks) {
@@ -76,7 +80,7 @@ async function startQueue() {
     let file = fileQueue.pop();
     await startJobs(file);
   }
-  
+
   queueIsWorking = false;
 }
 
@@ -98,14 +102,14 @@ async function startJobs(file) {
   for (let job of task.jobs) {
     const outDirPath = path.join(OUTPUT_DIRECTORY, job.name, subfolders);
     const outFilePath = path.join(outDirPath, `${fileName}.${job.out_ext}`);
-    
+
     // Create the necessary folders if they don't exist in the output dir
     fs.mkdirpSync(outDirPath);
-  
+
     const command = buildCommand(task.command, {
       input: file.path,
       output: outFilePath,
-      flags: job.flags,
+      flags: job.flags
     });
 
     console.log('Starting job', job.name);
@@ -117,18 +121,21 @@ async function startJobs(file) {
       console.log('Job failed', ex);
     }
   }
-};
+}
 
 /**
  * Templating function for commands. Any key you pass in `data` can be used as a
  * simple template variable by placing it between {{ }}.
- * @param {string} template 
- * @param {object} data 
+ * @param {string} template
+ * @param {object} data
  */
 function buildCommand(template, data) {
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
-      template = template.replace(new RegExp(`\\{\\{` + key + '\\}\\}', 'ig'), data[key]);
+      template = template.replace(
+        new RegExp(`\\{\\{` + key + '\\}\\}', 'ig'),
+        data[key]
+      );
     }
   }
   return template;

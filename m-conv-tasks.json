@@ -3,15 +3,7 @@
     {
       "group": "Videos (ffmpeg)",
       "command": "ffmpeg -i \"{{input}}\" -y {{flags}} \"{{output}}\"",
-      "matched_ext": [
-        "mp4",
-        "mpg",
-        "mpeg",
-        "wmv",
-        "flv",
-        "avi",
-        "mov"
-      ],
+      "matched_ext": ["mp4", "mpg", "mpeg", "wmv", "flv", "avi", "mov"],
       "jobs": [
         {
           "name": "720p_H264_medium",
@@ -38,13 +30,7 @@
     {
       "group": "Images (ImageMagick)",
       "command": "convert {{flags}} \"{{input}}\" \"{{output}}\"",
-      "matched_ext": [
-        "jpg",
-        "jpeg",
-        "png",
-        "tiff",
-        "gif"
-      ],
+      "matched_ext": ["jpg", "jpeg", "png", "tiff", "gif"],
       "jobs": [
         {
           "name": "small",
