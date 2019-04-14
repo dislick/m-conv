@@ -80,5 +80,6 @@ Both variables default to `./input` and `./output`.
 You should setup a cronjob to empty the directories every now and then:
 
 ```
-0 0 * * 0       rm -rf /var/mediaconverter/share/{input,output}/*
+0 0 * * 0       rm -rf /var/mediaconverter/share/input/*
+0 0 * * 0       rm -rf /var/mediaconverter/share/output/*
 ```
