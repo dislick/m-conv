@@ -43,6 +43,18 @@
           "out_ext": "jpg"
         }
       ]
+    },
+    {
+      "group": "Audio (ffmpeg)",
+      "command": "ffmpeg -i \"{{input}}\" -y {{flags}} \"{{output}}\"",
+      "matched_ext": ["wav", "wma", "m4a", "aac", "ogg"],
+      "jobs": [
+        {
+          "name": "mp3",
+          "flags": "-vn -ar 44100 -ac 2 -ab 192k -f mp3",
+          "out_ext": "mp3"
+        }
+      ]
     }
   ]
 }
