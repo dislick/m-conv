@@ -4,7 +4,8 @@
   "description": "Automatic media conversion by copying files to a folder",
   "main": "src/watch.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"src/**/*.{js,json,md}\""
   },
   "keywords": [
     "media",
@@ -19,5 +20,8 @@
   "dependencies": {
     "chokidar": "^2.1.5",
     "fs-extra": "^7.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^1.17.1"
   }
 }

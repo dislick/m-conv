@@ -40,8 +40,8 @@ const watcher = chokidar.watch(WATCH_DIRECTORY, {
   ignoreInitial: true,
   awaitWriteFinish: {
     stabilityThreshold: 3000,
-    pollInterval: 100
-  }
+    pollInterval: 100,
+  },
 });
 
 /**
@@ -63,7 +63,7 @@ watcher.on('add', filePath => {
     if (extensionRegex.test(extension)) {
       fileQueue.push({
         path: filePath,
-        type: task.group
+        type: task.group,
       });
     }
   }
@@ -109,7 +109,7 @@ async function startJobs(file) {
     const command = buildCommand(task.command, {
       input: file.path,
       output: outFilePath,
-      flags: job.flags
+      flags: job.flags,
     });
 
     console.log('Starting job', job.name);
