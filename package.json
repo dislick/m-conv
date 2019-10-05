@@ -18,10 +18,10 @@
   "author": "Patrick Muff",
   "license": "MIT",
   "dependencies": {
-    "chokidar": "^2.1.5",
-    "fs-extra": "^7.0.1"
+    "chokidar": "^3.2.1",
+    "fs-extra": "^8.1.0"
   },
   "devDependencies": {
-    "prettier": "^1.17.1"
+    "prettier": "^1.18.2"
   }
 }
