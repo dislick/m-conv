@@ -1,6 +1,6 @@
 {
   "name": "m-conv",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Automatic media conversion by copying files to a folder",
   "main": "src/watch.js",
   "scripts": {
