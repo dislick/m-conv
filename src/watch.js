@@ -8,8 +8,8 @@ const tasks = require('../m-conv-tasks.json').tasks;
  * Environment Variables
  *
  * When declaring the WATCH and OUTPUT directory env variables make sure to use
- * relative paths. Oh and you know, don't create an infinite loop by having the
- * output dir inside the input dir.
+ * relative paths. Oh and you know, don't make it loop infinitely by having the
+ * output inside the input.
  */
 const WATCH_DIRECTORY = path.resolve(
   process.env.CONVERT_WATCH_DIR || './input'
@@ -20,7 +20,7 @@ const OUTPUT_DIRECTORY = path.resolve(
 
 /**
  * The main reason that we are printing the directory variables is so that the
- * user immediately recognizes if he/she made a mistake when configuring the
+ * user immediately recognizes if they made a mistake when configuring the
  * environment variables.
  */
 console.log('Initializing...');
