@@ -10,7 +10,7 @@ It allows the user to paste a whole directory tree and will keep that structure 
 
 ## Example Task
 
-The example tasks converts videos to 720p using `ffmpeg`.
+The example task converts videos to 720p using `ffmpeg`.
 
 ```javascript
 {
